@@ -17,6 +17,7 @@ export default function ProductCard() {
   const [instructions, setInstructions] = useState('')
 
   type Product = {
+    slug: string
     id: number;
     name: string;
     price: number | string;
@@ -31,7 +32,7 @@ export default function ProductCard() {
     slug: string;
   }
 
-   useEffect(() => {
+  useEffect(() => {
         const fetchProducts = async () => {
           try {
             const productsRes = await WooCommerce.get('products', {
@@ -46,9 +47,9 @@ export default function ProductCard() {
             // Debug logs
             console.log("Fetched products count:", productsRes.data.length)
             console.log('All products:', allProducts.map(p => p.name));
-            console.log('Starters products:', startermenuProducts.map(p => p.name));
-            console.log('Starters categories:', startermenuProducts.map(p => 
-              p.categories.map(c => `${c.name} (${c.slug})`).join(', ')
+            console.log('Starter Menu products:', startermenuProducts.map(p => p.name));
+            console.log('Starter Menu categories:', startermenuProducts.map(p => 
+              p.categories.map(c => `${c.id} (${c.slug})`).join(', ')
             ));
             setProducts(startermenuProducts);
           } catch (err) {
