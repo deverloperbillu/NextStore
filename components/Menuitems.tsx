@@ -1,7 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Startermenuproducts from './productItems/Startermenuproducts';
-
+import Saladmenuproducts from './productItems/Saladmenuproducts'
+import Burgermenuproducts from './productItems/Burgermenuproducts'
 
 export default function ScrollSpyMenu() {
     const [activeSection, setActiveSection] = useState('home');
@@ -41,12 +42,12 @@ export default function ScrollSpyMenu() {
             <section id="starters">
                 <Startermenuproducts />
             </section>
-            {/* <section id="salads">
-                
+            <section id="salads">
+                <Saladmenuproducts />
             </section>
             <section id="burgers">
-                
-            </section> */}
+                <Burgermenuproducts />
+            </section>
             {/* <section id="steak_beaf">Contact Section</section> */}
             {/* <section id="steak_chicken">Contact Section</section> */}
             {/* <section id="chinese">Contact Section</section> */}

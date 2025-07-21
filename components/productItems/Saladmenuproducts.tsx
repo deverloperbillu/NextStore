@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { HiOutlinePlus } from 'react-icons/hi2'
-import productbaner from '@/app/assets/images/starterbanner.webp'
+import productbaner from '@/app/assets/images/saladbanner.webp'
 import { useAppDispatch } from '@/store/hooks'
 import { addToCart } from '@/store/features/cartSlice'
 import { woocommerceapi } from '@/lib/woocommerce'
@@ -42,17 +42,17 @@ export default function ProductCard() {
                 stock_status: 'instock',
             });
             const allProducts: Product[] = productsRes.data;
-            const starterProducts = allProducts.filter((product) =>
-              product.categories.some(cat => cat.slug === 'starter')
+            const saladProducts = allProducts.filter((product) =>
+              product.categories.some(cat => cat.slug === 'salad')
             );
             // Debug logs
             console.log("Fetched products count:", productsRes.data.length)
             console.log('All products:', allProducts.map(p => p.name));
-            // console.log('Starters products:', starterProducts.map(p => p.name));
-            // console.log('Starters categories:', starterProducts.map(p => 
+            // console.log('Salad products:', saladProducts.map(p => p.name));
+            // console.log('Salad categories:', saladProducts.map(p => 
             //   p.categories.map(c => `${c.id} (${c.slug})`).join(', ')
             // ));
-            setProducts(starterProducts);
+            setProducts(saladProducts);
           } catch (err) {
             console.error('Error fetching products:', err);
           }
@@ -103,7 +103,7 @@ export default function ProductCard() {
                     {product.name}
                   </h4>
                   <div className="text-[#000] text-[13px] my-[5px]">
-                    {sanitizeHtml(product.description ?? '', { allowedTags: [], allowedAttributes: {} }).slice(0, 55)}
+                    {sanitizeHtml(product.description ?? '', { allowedTags: [], allowedAttributes: {} })}
                   </div>
                   <span className="text-[#fe000c] text-[16px] font-bold">Rs {product.price}</span>
                   <div className="item_details_btn relative block">
