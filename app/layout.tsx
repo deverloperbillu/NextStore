@@ -2,6 +2,8 @@ import './globals.css'
 import { ReactNode } from 'react'
 import ReduxProvider from '@/components/ReduxProvider'
 import { Poppins } from "next/font/google";
+import Header from '@/components/Header';
+import { Footer } from '@/components/Footer';
 
 const poppinsFont = Poppins({
   subsets: ["latin"],
@@ -13,7 +15,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body className={`${poppinsFont.variable}`}>
         <ReduxProvider>
+          <Header />
           {children}
+          <Footer />
         </ReduxProvider>
       </body>
     </html>

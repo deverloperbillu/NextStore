@@ -3,13 +3,13 @@
 import React, { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { HiOutlinePlus } from 'react-icons/hi2'
-import productbaner from '@/app/assets/images/burgerbanner.webp'
 import { useAppDispatch } from '@/store/hooks'
 import { addToCart } from '@/store/features/cartSlice'
 import { woocommerceapi } from '@/lib/woocommerce'
 import sanitizeHtml from 'sanitize-html'
 
 export default function ProductCard() {
+  const [categoryImage, setCategoryImage] = useState<string | null>(null);    
   const dispatch = useAppDispatch()
   const [products, setProducts] = useState<Product[]>([])
   const [selectCategory, setSelectCategory] = useState<Product | null>(null)
@@ -59,6 +59,22 @@ export default function ProductCard() {
         };
         fetchProducts();
       }, []);
+  useEffect(() => {
+        const fetchCategoryImage = async () => {
+          try {
+            const res = await woocommerceapi.get('products/categories', {
+              slug: 'burgers'
+            });
+            const imageUrl = res.data[0]?.image?.src || null;
+            setCategoryImage(imageUrl);
+          } catch (error) {
+            console.error('Error fetching category image:', error);
+            setCategoryImage(null);
+          }
+        };
+    
+        fetchCategoryImage();
+      }, []);    
 
   const handleAddToCart = () => {
     if (!selectCategory) return
@@ -80,7 +96,7 @@ export default function ProductCard() {
     <div className="Menus_display">
       <div className="max-w-7xl mx-auto mt-14">
         <div className="product_banner mb-6">
-          <Image src={productbaner} className='rounded-[16px]' alt="Products Banner" />
+          <Image  src={categoryImage || '/no-image.webp'} className='rounded-[16px] w-full h-full' alt="Category Banner" width={1000} height={400} priority />
         </div>
 
         <div className="grid grid-cols-3 gap-4 mt-6">

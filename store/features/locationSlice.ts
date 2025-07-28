@@ -2,6 +2,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 interface LocationState {
   selected: string | null
+  // Add other properties here if needed, for example:
+  // locations?: Record<string, string>
 }
 
 const initialState: LocationState = {
