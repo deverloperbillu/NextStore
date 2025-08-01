@@ -153,7 +153,7 @@ export default function CheckoutPage() {
     />
     { userLocation && (
       <div className="bg-[#ced4da] text-sm text-black font-semibold px-3 py-2 whitespace-nowrap border p-2 rounded  border-[#c3c3c3] rounded-tl-none rounded-bl-none">
-         {userLocation.split('-')[1]?.split('')}
+         {userLocation.split('-').slice(1).join('-').trim()}
       </div>
     )}
     </div>
