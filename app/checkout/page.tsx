@@ -31,7 +31,7 @@ export default function CheckoutPage() {
     email: '',
     deliveryInstruction: '',
     payment: 'cod',
-    changeRequested: '',
+    // changeRequested: '',
   })
 
   const [orderPlaced, setOrderPlaced] = useState(false)
@@ -42,14 +42,36 @@ export default function CheckoutPage() {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  const handlePlaceOrder = () => {
-    if (!form.title || !form.fullName || !form.phone || !form.address || !form.alternatePhone || !form.landmark || !form.address || !form.email || !form.deliveryInstruction || !form.payment || !form.changeRequested ) {
+  const handlePlaceOrder = async () => {
+    if (!form.title || !form.fullName || !form.phone || !form.address || !form.alternatePhone || !form.landmark || !form.address || !form.email || !form.deliveryInstruction || !form.payment ) {
       alert('Please fill all fields')
       return
     }
 
-    dispatch(clearCart())
-    setOrderPlaced(true)
+  const orderData = {
+      ...form,
+      cart: items,
+    }
+
+    try {
+      const res = await fetch('/api/place-order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(orderData)
+      })
+
+      if (res.ok) {
+        dispatch(clearCart())
+        setOrderPlaced(true)
+      } else {
+        alert('Failed to place order')
+      }
+    } catch (err) {
+      console.error('Order placement failed:', err)
+      alert('An error occurred while placing order')
+    }
   }
 
   if (orderPlaced) {
@@ -236,7 +258,7 @@ export default function CheckoutPage() {
 </div>
 
         {/* Change Request */}
-        {paymentMethod === 'cod' && (
+        {/* {paymentMethod === 'cod' && (
         <div className="flex items-center gap-2">
           <span className="text-gray-500">Rs.</span>
           <input
@@ -247,14 +269,14 @@ export default function CheckoutPage() {
             onChange={handleChange}
           />
         </div>
-        )}
+        )} */}
         {/* Submit Button */}
-        <button
+        {/* <button
           type="submit"
           className="bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700"
         >
           Place Order
-        </button>
+        </button> */}
       </form>
     </div>
                     </div>
